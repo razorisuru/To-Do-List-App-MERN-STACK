@@ -2,7 +2,7 @@
 
 cd backend
 npm install
-nom run dev
+npm run dev
 
 cd frontend
 npm install
