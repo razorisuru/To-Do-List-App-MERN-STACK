@@ -165,7 +165,7 @@ const TaskItem = ({
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
         <div className="modal fade show d-block" tabIndex="-1">
-          <div className="modal-dialog">
+          <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Confirm Delete</h5>

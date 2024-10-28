@@ -4,10 +4,12 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import TaskForm from "./components/TaskForm";
 import TaskItem from "./components/TaskItem";
 import TaskController from "./controllers/TaskController";
+import Loader from "./components/Loader"; // Import the Loader component
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
   const [editTaskId, setEditTaskId] = useState(null);
+  const [loading, setLoading] = useState(false); // State to manage loading
   const [editTitle, setEditTitle] = useState("");
   const [editDescription, setEditDescription] = useState("");
   const [editStatus, setEditStatus] = useState("incomplete");
@@ -18,20 +20,22 @@ const App = () => {
   }, []);
 
   const fetchTasks = async () => {
+    setLoading(true); // Set loading to true
     const tasksData = await TaskController.fetchTasks();
     setTasks(tasksData);
+    setLoading(false); // Set loading to false after fetching
   };
 
   const addTask = async (newTask) => {
+    setLoading(true); // Set loading to true
     await TaskController.addTask(newTask);
     fetchTasks();
   };
 
   const deleteTask = async (id) => {
-    if (window.confirm("Are you sure you want to delete this task?")) {
-      await TaskController.deleteTask(id);
-      fetchTasks();
-    }
+    setLoading(true); // Set loading to true
+    await TaskController.deleteTask(id);
+    fetchTasks();
   };
 
   const startEdit = (task) => {
@@ -47,6 +51,7 @@ const App = () => {
   };
 
   const saveEdit = async (id, updatedTask) => {
+    setLoading(true); // Set loading to true
     await TaskController.saveEdit(id, updatedTask);
     fetchTasks();
     setEditTaskId(null);
@@ -54,7 +59,8 @@ const App = () => {
 
   return (
     <div className="container">
-      <h1 className="text-center text-light text-bg-info rounded-3 my-4">To-Do List</h1>
+      {loading && <Loader />} {/* Render loader when loading */}
+      <div className="mt-5"></div>
       <TaskForm addTask={addTask} />
       <ul className="list-group">
         {tasks.map((task) => (
