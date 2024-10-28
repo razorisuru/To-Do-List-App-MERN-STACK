@@ -1,0 +1,31 @@
+.form-container {
+    background-color: #f9f9f9; /* Light grey background */
+    margin: 0 auto;
+  }
+  
+  h3 {
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .form-control {
+    border-radius: 0.375rem; /* Rounded input borders */
+  }
+  
+  .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  
+  .btn-block {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+  }
+  
+  .invalid-feedback {
+    display: block;
+    margin-top: 0.25rem;
+    color: #dc3545; /* Red color for error text */
+  }
+  

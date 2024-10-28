@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./TaskForm.css";
 
 const TaskForm = ({ addTask }) => {
   const [title, setTitle] = useState("");
@@ -9,24 +10,22 @@ const TaskForm = ({ addTask }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Simple validation to check if fields are empty
     const newErrors = {};
     if (!title) newErrors.title = "Title is required";
     if (!description) newErrors.description = "Description is required";
     if (!dueDate) newErrors.dueDate = "Due date is required";
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors); // Set errors if validation fails
+      setErrors(newErrors);
     } else {
       addTask({ title, description, dueDate });
       setTitle("");
       setDescription("");
       setDueDate("");
-      setErrors({}); // Clear errors after successful submission
+      setErrors({});
     }
   };
 
-  // Clear the specific error when the user starts typing
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
     if (errors.title) {
@@ -49,42 +48,47 @@ const TaskForm = ({ addTask }) => {
   };
 
   return (
-    <div className="mb-4">
+    <div className="form-container mb-4 p-4 border rounded shadow">
+      <h3 className="text-center mb-4">Add New Task</h3>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          className={`form-control ${errors.title ? "is-invalid" : ""}`}
-          placeholder="Title"
-          value={title}
-          onChange={handleTitleChange}
-        />
-        {errors.title && <small className="text-danger">{errors.title}</small>}
+        <div className="form-group mb-3">
+          <input
+            type="text"
+            className={`form-control ${errors.title ? "is-invalid" : ""}`}
+            placeholder="Title"
+            value={title}
+            onChange={handleTitleChange}
+          />
+          {errors.title && (
+            <div className="invalid-feedback">{errors.title}</div>
+          )}
+        </div>
 
-        <textarea
-          className={`form-control my-2 ${
-            errors.description ? "is-invalid" : ""
-          }`}
-          placeholder="Description"
-          value={description}
-          onChange={handleDescriptionChange}
-        ></textarea>
-        {errors.description && (
-          <small className="text-danger">{errors.description}</small>
-        )}
+        <div className="form-group mb-3">
+          <textarea
+            className={`form-control ${errors.description ? "is-invalid" : ""}`}
+            placeholder="Description"
+            value={description}
+            onChange={handleDescriptionChange}
+          ></textarea>
+          {errors.description && (
+            <div className="invalid-feedback">{errors.description}</div>
+          )}
+        </div>
 
-        <input
-          type="date"
-          className={`form-control my-2 ${errors.dueDate ? "is-invalid" : ""}`}
-          value={dueDate}
-          onChange={handleDueDateChange}
-        />
-        {errors.dueDate && (
-          <small className="text-danger">{errors.dueDate}</small>
-        )}
+        <div className="form-group mb-4">
+          <input
+            type="date"
+            className={`form-control ${errors.dueDate ? "is-invalid" : ""}`}
+            value={dueDate}
+            onChange={handleDueDateChange}
+          />
+          {errors.dueDate && (
+            <div className="invalid-feedback">{errors.dueDate}</div>
+          )}
+        </div>
 
-        <button className="btn btn-primary" type="submit">
-          Add Task
-        </button>
+        <button className="btn btn-primary btn-block">Add Task</button>
       </form>
     </div>
   );
